@@ -1,0 +1,29 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3312/getme-bd-dev
+    username: root
+    password: "@getME653%"
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 5
+      idle-timeout: 30000
+      max-lifetime: 200000
+      maximum-pool-size: 10
+      connection-timeout: 30000
+      pool-name: default-pool
+  jpa:
+    open-in-view: false
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+      org:
+        hibernate:
+          envers:
+          # propriedades do envers: https://docs.jboss.org/hibernate/orm/4.2/devguide/en-US/html/ch15.html#d5e4079
+    hibernate:
+      ddl-auto: update

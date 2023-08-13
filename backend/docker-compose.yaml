@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: "getme-bd-dev"
+      MYSQL_ROOT_PASSWORD: "@getME653%"
+    ports:
+      - "3312:3306"
+    volumes:
+      - get-me-dev:/var/lib/mysql
+volumes:
+  get-me-dev:
