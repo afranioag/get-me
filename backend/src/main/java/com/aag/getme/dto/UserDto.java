@@ -1,10 +1,11 @@
 package com.aag.getme.dto;
 
 import com.aag.getme.model.Address;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import org.hibernate.validator.constraints.br.CPF;
 
-import javax.validation.constraints.NotBlank;
+
 import java.io.Serializable;
 
 @Data

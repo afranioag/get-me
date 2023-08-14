@@ -2,14 +2,14 @@ package com.aag.getme.model;
 
 import com.aag.getme.enuns.Gender;
 import com.aag.getme.enuns.StatusPerson;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Getter
 @Setter
@@ -37,7 +37,23 @@ public class Person extends MyEntity implements Serializable {
     @JoinColumn(name = "location_details_id")
     private LocationDetails lastSeenLocation;
     private String document;
-    private LocalDateTime registrationDate;
-    private LocalDateTime lastUpdate;
+
+    @Getter
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant registrationDate;
+
+    @Getter
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant lastUpdate;
     private StatusPerson status;
+
+    @PrePersist
+    public void prePersist() {
+        registrationDate = Instant.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        lastUpdate = Instant.now();
+    }
 }

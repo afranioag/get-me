@@ -1,16 +1,13 @@
 package com.aag.getme.model;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +26,28 @@ public class User extends MyEntity implements Serializable {
     @Embedded
     private Address address;
     private String image;
-    private LocalDateTime registrationDate;
-    private LocalDateTime lastUpdate;
+
+
+    @Getter
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant registrationDate;
+
+    @Getter
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant lastUpdate;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Person> persons = new ArrayList<>();
+
+
+    @PrePersist
+    public void prePersist() {
+        registrationDate = Instant.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        lastUpdate = Instant.now();
+    }
+
 }
