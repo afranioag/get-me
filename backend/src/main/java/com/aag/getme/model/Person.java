@@ -7,10 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
@@ -18,8 +16,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Person extends MyEntity{
-    private static final long serialVersionUID = 1L;
+public class Person extends MyEntity implements Serializable {
+    private static final long serialVersionUID = 2405172041950251807L;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     private String name;
     private Integer age;

@@ -1,9 +1,6 @@
 package com.aag.getme.model;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +9,7 @@ import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
 @Getter
+@Setter
 @MappedSuperclass
 @NoArgsConstructor
 @AllArgsConstructor
