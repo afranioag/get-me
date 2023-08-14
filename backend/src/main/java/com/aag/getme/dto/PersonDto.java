@@ -1,22 +1,26 @@
 package com.aag.getme.dto;
 
+import com.aag.getme.enuns.Gender;
+import com.aag.getme.enuns.StatusPerson;
+import com.aag.getme.model.LocationDetails;
 import lombok.Data;
-import org.hibernate.validator.constraints.br.CPF;
 
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @Data
 public class PersonDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @NotBlank(message = "O nome não pode ser vazio")
     private String name;
-
-    @CPF(message = "Você precisa informar um CPF válido")
-    @NotBlank(message = "Você precisa informar uma CPF")
-    private String cpf;
-
-    private String telefone;
-    private String email;
+    private Integer age;
+    private Integer height;
+    private String hairColor;
+    private String eyeColor;
+    private Gender gender;
+    private String bodyMark;
+    private String physicalDescription;
+    private String psychologicalDescription;
+    private LocationDetails lastSeenLocation;
+    private String document;
+    private StatusPerson status;
 }
