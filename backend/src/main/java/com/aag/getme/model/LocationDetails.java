@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
 
 @Getter
 @Setter
@@ -16,8 +15,6 @@ import javax.persistence.OneToOne;
 public class LocationDetails extends MyEntity{
     private static final long serialVersionUID = 1L;
 
-    @OneToOne(mappedBy = "lastSeenLocation")
-    private Person person;
     private String country;
     private String state;
     private String city;
