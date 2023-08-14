@@ -1,11 +1,17 @@
 package com.aag.getme.service;
 
 import com.aag.getme.dto.PersonDto;
+import com.aag.getme.exceptions.DatabaseException;
+import com.aag.getme.exceptions.ModelNotFoundException;
 import com.aag.getme.model.Person;
 import com.aag.getme.repository.PersonRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,12 +31,13 @@ public class PersonService {
     }
 
     public PersonDto update(PersonDto dto, Long personId) {
-
-        Person person = personRepository.findById(personId).orElseThrow(() ->
-                new RuntimeException(PERSON_NOT_FOUND + personId));
-
-        modelMapper.map(dto, person);
-        return modelMapper.map(personRepository.save(person), PersonDto.class);
+        try {
+            Person person = personRepository.getReferenceById(personId);
+            modelMapper.map(dto, person);
+            return modelMapper.map(personRepository.save(person), PersonDto.class);
+        }catch (EntityNotFoundException e) {
+            throw new ModelNotFoundException(PERSON_NOT_FOUND + personId);
+        }
     }
 
     public PersonDto findById(Long personId) {
@@ -46,11 +53,16 @@ public class PersonService {
                 .map(person -> modelMapper.map(person, PersonDto.class)).toList();
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS)
     public void delete(Long personId) {
+        if(personRepository.existsById(personId)) {
+            try {
+                personRepository.deleteById(personId);
+            } catch (DataIntegrityViolationException e) {
+                throw new DatabaseException("Falha de integrida referencial");
+            }
+        }
 
-        Person person = personRepository.findById(personId).orElseThrow(() ->
-                new RuntimeException(PERSON_NOT_FOUND + personId));
-
-        personRepository.delete(person);
+        throw new ModelNotFoundException(PERSON_NOT_FOUND + personId);
     }
 }
