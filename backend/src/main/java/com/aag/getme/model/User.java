@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -27,6 +28,16 @@ public class User extends MyEntity implements Serializable {
     private Address address;
     private String image;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Person> persons = new ArrayList<>();
+
+    private String password;
+
+    @ManyToMany
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
     @Getter
     @Column(columnDefinition = "TIMESTAMP")
@@ -35,10 +46,6 @@ public class User extends MyEntity implements Serializable {
     @Getter
     @Column(columnDefinition = "TIMESTAMP")
     private Instant lastUpdate;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Person> persons = new ArrayList<>();
-
 
     @PrePersist
     public void prePersist() {
