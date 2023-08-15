@@ -57,4 +57,16 @@ public class User extends MyEntity implements Serializable {
         lastUpdate = Instant.now();
     }
 
+    public void addRole(Role role) {
+        roles.add(role);
+    }
+
+    public boolean hasRole(Role roleVerify) {
+        for (Role role: roles) {
+            if(role.equals(roleVerify)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
