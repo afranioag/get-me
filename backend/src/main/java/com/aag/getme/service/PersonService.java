@@ -24,12 +24,13 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
 
+    @Transactional
     public Person create(PersonDto dto) {
-
         Person person = modelMapper.map(dto, Person.class);
         return personRepository.save(person);
     }
 
+    @Transactional
     public PersonDto update(PersonDto dto, Long personId) {
         try {
             Person person = personRepository.getReferenceById(personId);
@@ -40,14 +41,16 @@ public class PersonService {
         }
     }
 
+    @Transactional(readOnly = true)
     public PersonDto findById(Long personId) {
 
         Person person = personRepository.findById(personId).orElseThrow(() ->
-                new RuntimeException(PERSON_NOT_FOUND + personId));
+                new ModelNotFoundException(PERSON_NOT_FOUND + personId));
 
         return modelMapper.map(person, PersonDto.class);
     }
 
+    @Transactional(readOnly = true)
     public List<PersonDto> findAll() {
         return personRepository.findAll().stream()
                 .map(person -> modelMapper.map(person, PersonDto.class)).toList();

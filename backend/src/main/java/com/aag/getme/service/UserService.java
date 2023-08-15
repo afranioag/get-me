@@ -22,12 +22,13 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Transactional
     public User create(UserDto dto) {
         User user = modelMapper.map(dto, User.class);
         return userRepository.save(user);
-
     }
 
+    @Transactional
     public UserDto update(UserDto dto, Long userId) {
         try {
             User user = userRepository.getReferenceById(userId);
@@ -40,6 +41,7 @@ public class UserService {
 
     }
 
+    @Transactional(readOnly = true)
     public UserDto findById(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new RuntimeException(USER_NOT_FOUND + userId));
