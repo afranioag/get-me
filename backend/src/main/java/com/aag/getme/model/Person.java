@@ -16,6 +16,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "person")
 public class Person extends MyEntity implements Serializable {
     private static final long serialVersionUID = 2405172041950251807L;
 
@@ -39,11 +40,11 @@ public class Person extends MyEntity implements Serializable {
     private String document;
 
     @Getter
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    @Column(columnDefinition = "TIMESTAMP")
     private Instant registrationDate;
 
     @Getter
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    @Column(columnDefinition = "TIMESTAMP")
     private Instant lastUpdate;
     private StatusPerson status;
 
@@ -56,4 +57,5 @@ public class Person extends MyEntity implements Serializable {
     public void preUpdate() {
         lastUpdate = Instant.now();
     }
+
 }

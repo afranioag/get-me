@@ -29,11 +29,11 @@ public class User extends MyEntity implements Serializable {
 
 
     @Getter
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    @Column(columnDefinition = "TIMESTAMP")
     private Instant registrationDate;
 
     @Getter
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    @Column(columnDefinition = "TIMESTAMP")
     private Instant lastUpdate;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
