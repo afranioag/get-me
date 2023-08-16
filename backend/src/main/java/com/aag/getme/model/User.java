@@ -21,7 +21,7 @@ public class User extends MyEntity implements Serializable {
     private static final long serialVersionUID = 2405172041950251807L;
 
     private String name;
-    private String cpf;
+    private String document;
     private String phone;
     private String email;
     @Embedded
