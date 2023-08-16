@@ -9,6 +9,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,12 +20,16 @@ public class UserService {
     private static final String USER_NOT_FOUND = "User not found with id: ";
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private BCryptPasswordEncoder encoder;
     @Autowired
     private UserRepository userRepository;
 
     @Transactional
     public User create(UserDto dto) {
         User user = modelMapper.map(dto, User.class);
+        user.setPassword(encoder.encode(dto.getPassword()));
         return userRepository.save(user);
     }
 
@@ -34,6 +39,7 @@ public class UserService {
             User user = userRepository.getReferenceById(userId);
             modelMapper.map(dto, user);
             modelMapper.map(dto, user);
+            user.setPassword(encoder.encode(dto.getPassword()));
             return modelMapper.map(userRepository.save(user), UserDto.class);
         }catch (EntityNotFoundException e) {
             throw new ModelNotFoundException(USER_NOT_FOUND + userId);
