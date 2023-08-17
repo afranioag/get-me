@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 
 @Getter
@@ -23,6 +24,23 @@ public class Role extends MyEntity implements Serializable, GrantedAuthority {
     public Role(Long id, String authority) {
         super(id);
         this.authority = authority;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(authority);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Role other = (Role) obj;
+        return Objects.equals(authority, other.authority);
     }
 
 }

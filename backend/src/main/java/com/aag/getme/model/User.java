@@ -1,6 +1,5 @@
 package com.aag.getme.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,10 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -27,7 +23,9 @@ public class User extends MyEntity implements Serializable, UserDetails {
     private String name;
     private String document;
     private String phone;
+    @Column(unique = true)
     private String email;
+    private String password;
     @Embedded
     private Address address;
     private String image;
@@ -35,14 +33,12 @@ public class User extends MyEntity implements Serializable, UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Person> persons = new ArrayList<>();
 
-    @JsonIgnore
-    private String password;
 
     @ManyToMany
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
     @Getter
     @Column(columnDefinition = "TIMESTAMP")
@@ -66,9 +62,9 @@ public class User extends MyEntity implements Serializable, UserDetails {
         roles.add(role);
     }
 
-    public boolean hasRole(Role roleVerify) {
-        for (Role role: roles) {
-            if(role.equals(roleVerify)) {
+    public boolean hasRole(String roleName) {
+        for (Role role : roles) {
+            if (role.getAuthority().equals(roleName)) {
                 return true;
             }
         }
@@ -87,21 +83,21 @@ public class User extends MyEntity implements Serializable, UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }
