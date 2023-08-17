@@ -1,13 +1,9 @@
 spring:
   profiles:
     active: ${APP_PROFILE:dev}
-
-  jpa:
-    open-in-view: false
-
   security:
-    client-id: ${CLIENT_ID:myclientid}
-    client-secret: ${CLIENT_SECRET:myclientsecret}
+    client-id: ${CLIENT_ID:getme}
+    client-secret: ${CLIENT_SECRET:getme653}
     jwt:
       duration: ${JWT_DURATION:86400}
 
