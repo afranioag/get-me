@@ -33,11 +33,8 @@ public class Person extends MyEntity implements Serializable {
     private String bodyMark;
     private String physicalDescription;
     private String psychologicalDescription;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "location_details_id")
-    private LocationDetails lastSeenLocation;
     private String document;
+    private String photo;
 
     @Getter
     @Column(columnDefinition = "TIMESTAMP")

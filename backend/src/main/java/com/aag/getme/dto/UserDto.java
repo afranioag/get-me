@@ -1,10 +1,8 @@
 package com.aag.getme.dto;
 
-import com.aag.getme.model.Address;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import org.hibernate.validator.constraints.br.CPF;
-
 
 import java.io.Serializable;
 
@@ -28,8 +26,8 @@ public class UserDto implements Serializable {
     @NotBlank
     private String password;
 
-    private Address address;
-
     @NotBlank
+    private String passwordConfirm;
+
     private String image;
 }

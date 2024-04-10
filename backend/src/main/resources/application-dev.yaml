@@ -27,4 +27,4 @@ spring:
           envers:
           # propriedades do envers: https://docs.jboss.org/hibernate/orm/4.2/devguide/en-US/html/ch15.html#d5e4079
     hibernate:
-      ddl-auto: update
+      ddl-auto: create

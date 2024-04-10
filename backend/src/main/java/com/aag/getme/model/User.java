@@ -21,13 +21,17 @@ public class User extends MyEntity implements Serializable, UserDetails {
     private static final long serialVersionUID = 2405172041950251807L;
 
     private String name;
+
     private String document;
+
+    @Column(unique = true)
     private String phone;
+
     @Column(unique = true)
     private String email;
+
     private String password;
-    @Embedded
-    private Address address;
+
     private String image;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
