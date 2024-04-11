@@ -15,7 +15,7 @@ public class UserDto implements Serializable {
 
     @NotBlank
     @CPF
-    private String cpf;
+    private String document;
 
     @NotBlank
     private String phone;

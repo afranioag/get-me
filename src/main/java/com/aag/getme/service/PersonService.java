@@ -61,11 +61,14 @@ public class PersonService {
         if(personRepository.existsById(personId)) {
             try {
                 personRepository.deleteById(personId);
+
             } catch (DataIntegrityViolationException e) {
                 throw new DatabaseException("Falha de integrida referencial");
-            }
-        }
 
-        throw new ModelNotFoundException(PERSON_NOT_FOUND + personId);
+            }
+        } else {
+            throw new ModelNotFoundException(PERSON_NOT_FOUND + personId);
+
+        }
     }
 }

@@ -20,7 +20,7 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping(value = "/v1")
     public ResponseEntity<MyEntity> create(@RequestBody PersonDto dto) {
 
@@ -33,23 +33,25 @@ public class PersonController {
         return ResponseEntity.created(uri).body(person);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PutMapping(value = "/{personId}/v1")
     public ResponseEntity<PersonDto> update(@RequestBody PersonDto dto, @PathVariable Long personId) {
         return ResponseEntity.ok().body(personService.update(dto, personId));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping(value = "/{personId}/v1")
     public ResponseEntity<PersonDto> findById(@PathVariable Long personId) {
         return ResponseEntity.ok().body(personService.findById(personId));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping(value = "/v1")
     public ResponseEntity<List<PersonDto>> findAll() {
         return ResponseEntity.ok().body(personService.findAll());
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @DeleteMapping(value = "/{personId}/v1")
     public ResponseEntity<Void> delete(@PathVariable Long personId) {
         personService.delete(personId);
