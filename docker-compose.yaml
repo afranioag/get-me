@@ -1,13 +1,14 @@
 version: "3.9"
 services:
   db:
-    image: mysql:5.7
+    image: postgres:13
     environment:
-      MYSQL_DATABASE: "getme-bd-dev"
-      MYSQL_ROOT_PASSWORD: "@getME653%"
+      POSTGRES_DB: "getme-bd-dev"
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "@getME653%"
     ports:
-      - "3312:3306"
+      - "5432:5432"
     volumes:
-      - get-me-dev:/var/lib/mysql
+      - get-me-dev:/var/lib/postgresql/data
 volumes:
   get-me-dev:

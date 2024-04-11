@@ -13,6 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "tb_information")
 public class Information extends MyEntity implements Serializable {
     private static final long serialVersionUID = 2405172041950251807L;
 

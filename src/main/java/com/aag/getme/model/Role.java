@@ -1,6 +1,7 @@
 package com.aag.getme.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "tb_role")
 public class Role extends MyEntity implements Serializable, GrantedAuthority {
     private static final long serialVersionUID = 2405172041950251807L;
 

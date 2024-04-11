@@ -17,6 +17,7 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "tb_user")
 public class User extends MyEntity implements Serializable, UserDetails {
     private static final long serialVersionUID = 2405172041950251807L;
 
@@ -39,7 +40,7 @@ public class User extends MyEntity implements Serializable, UserDetails {
 
 
     @ManyToMany
-    @JoinTable(name = "user_role",
+    @JoinTable(name = "tb_user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();

@@ -16,7 +16,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "person")
+@Table(name = "tb_person")
 public class Person extends MyEntity implements Serializable {
     private static final long serialVersionUID = 2405172041950251807L;
 

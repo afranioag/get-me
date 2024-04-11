@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "tb_report")
 public class Report extends MyEntity implements Serializable {
     private static final long serialVersionUID = 2405172041950251807L;
 
