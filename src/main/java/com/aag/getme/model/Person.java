@@ -35,6 +35,7 @@ public class Person extends MyEntity implements Serializable {
     private String psychologicalDescription;
     private String document;
     private String photo;
+    private StatusPerson status;
 
     @Getter
     @Column(columnDefinition = "TIMESTAMP")
@@ -43,7 +44,6 @@ public class Person extends MyEntity implements Serializable {
     @Getter
     @Column(columnDefinition = "TIMESTAMP")
     private Instant lastUpdate;
-    private StatusPerson status;
 
     @PrePersist
     public void prePersist() {

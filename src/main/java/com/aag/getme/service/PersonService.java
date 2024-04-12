@@ -19,8 +19,10 @@ import java.util.List;
 public class PersonService {
 
     private static final String PERSON_NOT_FOUND = "Person not found with id: ";
+
     @Autowired
     private ModelMapper modelMapper;
+
     @Autowired
     private PersonRepository personRepository;
 
