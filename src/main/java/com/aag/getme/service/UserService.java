@@ -22,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.aag.getme.config.auth.AppConfig.getUserNameAuthenticated;
+
 @Service
 public class UserService implements UserDetailsService {
 
@@ -96,5 +98,9 @@ public class UserService implements UserDetailsService {
         }
 
         return user;
+    }
+
+    public User getUserAuthenticated() {
+        return userRepository.findByEmail(getUserNameAuthenticated());
     }
 }

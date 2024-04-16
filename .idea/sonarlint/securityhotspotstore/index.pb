@@ -7,16 +7,12 @@ C
 pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
 A
 system.properties,a/5/a5db35984da8ffa0e255c16a2e31ae7b26e7d222
-[
-+src/main/java/com/aag/getme/model/User.java,1/3/132147a01b7e71775649ca8e2dfe4bcfa4028bc9
 _
 /src/main/java/com/aag/getme/model/MyEntity.java,1/5/159cfab0364809ed7f584e295f6b807cae2a191d
 l
 <src/main/java/com/aag/getme/repository/PersonRepository.java,c/2/c2da9175245fe8d37d2b4105dcedea562587bf65
 j
 :src/main/java/com/aag/getme/repository/UserRepository.java,6/7/6729b459db0d494686a78b0dd1614784a2f90fe0
-f
-6src/main/java/com/aag/getme/config/auth/AppConfig.java,4/5/452f15687a4d3feaa49f2a9be082e66397fdc7a8
 c
 3src/main/java/com/aag/getme/enuns/StatusPerson.java,1/5/150ed872fa38b19b51e519f00bf4f0c3f498379f
 f

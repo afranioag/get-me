@@ -28,15 +28,14 @@ public class ReportService {
     private PersonService personService;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private UserRepository userRepository;
 
     @Transactional
     public ReportPersonDTO save(ReportPersonDTO reportPersonDTO) {
-        // Criar lógica para recuperar usuário logado
-        long userId = 1;
-
-        User user = new User();
-        user.setId(userId);
+        User user = userService.getUserAuthenticated();
 
         Person person = personService.create(reportPersonDTO.getPerson());
         person.setUser(user);

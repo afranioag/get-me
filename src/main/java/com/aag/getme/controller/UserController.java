@@ -1,16 +1,12 @@
 package com.aag.getme.controller;
 
 import com.aag.getme.dto.UserDTO;
-import com.aag.getme.model.MyEntity;
 import com.aag.getme.model.User;
 import com.aag.getme.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/api/users")
@@ -21,7 +17,6 @@ public class UserController {
 
     @PostMapping(value = "/v1")
     public ResponseEntity<?> create(@RequestBody UserDTO dto) {
-
         User user = userService.create(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(user.getId());
     }
