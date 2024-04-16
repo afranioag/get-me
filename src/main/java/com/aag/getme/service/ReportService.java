@@ -1,6 +1,6 @@
 package com.aag.getme.service;
 
-import com.aag.getme.dto.PersonDto;
+import com.aag.getme.dto.PersonDTO;
 import com.aag.getme.dto.ReportPersonDTO;
 import com.aag.getme.model.LocationDetails;
 import com.aag.getme.model.Person;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ReportService {
@@ -32,9 +31,9 @@ public class ReportService {
     private UserRepository userRepository;
 
     @Transactional
-    public ReportPersonDTO save(ReportPersonDTO reportPersonDTO, long userId) {
-        if(!userRepository.existsById(userId))
-            throw new RuntimeException("Usuário não existe para o id Informado!");
+    public ReportPersonDTO save(ReportPersonDTO reportPersonDTO) {
+        // Criar lógica para recuperar usuário logado
+        long userId = 1;
 
         User user = new User();
         user.setId(userId);
@@ -56,22 +55,19 @@ public class ReportService {
     }
 
     //Preciso validar o usuario logado se é o dono do report
-    public ReportPersonDTO findId(Long userId, Long id) {
+    public ReportPersonDTO findId(Long id) {
         Report report = reportRepository.findById(id).orElseThrow(() -> new RuntimeException(""));
         return getReportPersonDTO(report);
 
     }
 
-    // Buscar dados atraves do usuario logado
-    public List<ReportPersonDTO> findAll(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User não existe"));
-        List<Report> reports = reportRepository.findAllByUser(user);
-        return reports.stream().map(this::getReportPersonDTO).toList();
+    public List<ReportPersonDTO> findAll() {
+        return reportRepository.findAll().stream().map(this::getReportPersonDTO).toList();
 
     }
 
     private ReportPersonDTO getReportPersonDTO(Report report) {
-        PersonDto personDto = modelMapper.map(report.getPerson(), PersonDto.class);
+        PersonDTO personDto = modelMapper.map(report.getPerson(), PersonDTO.class);
         LocationDetails locationDetails = modelMapper.map(report.getLastSeenLocation(), LocationDetails.class);
 
         ReportPersonDTO reportPersonDTO = new ReportPersonDTO();
@@ -81,5 +77,10 @@ public class ReportService {
         return reportPersonDTO;
     }
 
-
+    public List<ReportPersonDTO> findAllUser() {
+        long userId = 1;
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User não existe"));
+        List<Report> reports = reportRepository.findAllByUser(user);
+        return reports.stream().map(this::getReportPersonDTO).toList();
+    }
 }

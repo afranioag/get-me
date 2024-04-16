@@ -1,6 +1,6 @@
 package com.aag.getme.service;
 
-import com.aag.getme.dto.PersonDto;
+import com.aag.getme.dto.PersonDTO;
 import com.aag.getme.exceptions.DatabaseException;
 import com.aag.getme.exceptions.ModelNotFoundException;
 import com.aag.getme.model.Person;
@@ -27,35 +27,35 @@ public class PersonService {
     private PersonRepository personRepository;
 
     @Transactional
-    public Person create(PersonDto dto) {
+    public Person create(PersonDTO dto) {
         Person person = modelMapper.map(dto, Person.class);
         return personRepository.save(person);
     }
 
     @Transactional
-    public PersonDto update(PersonDto dto, Long personId) {
+    public PersonDTO update(PersonDTO dto, Long personId) {
         try {
             Person person = personRepository.getReferenceById(personId);
             modelMapper.map(dto, person);
-            return modelMapper.map(personRepository.save(person), PersonDto.class);
+            return modelMapper.map(personRepository.save(person), PersonDTO.class);
         }catch (EntityNotFoundException e) {
             throw new ModelNotFoundException(PERSON_NOT_FOUND + personId);
         }
     }
 
     @Transactional(readOnly = true)
-    public PersonDto findById(Long personId) {
+    public PersonDTO findById(Long personId) {
 
         Person person = personRepository.findById(personId).orElseThrow(() ->
                 new ModelNotFoundException(PERSON_NOT_FOUND + personId));
 
-        return modelMapper.map(person, PersonDto.class);
+        return modelMapper.map(person, PersonDTO.class);
     }
 
     @Transactional(readOnly = true)
-    public List<PersonDto> findAll() {
+    public List<PersonDTO> findAll() {
         return personRepository.findAll().stream()
-                .map(person -> modelMapper.map(person, PersonDto.class)).toList();
+                .map(person -> modelMapper.map(person, PersonDTO.class)).toList();
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)

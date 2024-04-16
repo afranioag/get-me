@@ -12,7 +12,7 @@ public class ReportPersonDTO implements Serializable {
     private static final long serialVersionUID = 1l;
 
     private Long id;
-    private PersonDto person;
+    private PersonDTO person;
     private LocationDetails lastSeenLocation;
     private List<Information> information;
 }

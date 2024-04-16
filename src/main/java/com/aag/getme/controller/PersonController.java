@@ -1,16 +1,12 @@
 package com.aag.getme.controller;
 
-import com.aag.getme.dto.PersonDto;
-import com.aag.getme.model.MyEntity;
-import com.aag.getme.model.Person;
+import com.aag.getme.dto.PersonDTO;
 import com.aag.getme.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -21,40 +17,21 @@ public class PersonController {
     private PersonService personService;
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    @PostMapping(value = "/v1")
-    public ResponseEntity<MyEntity> create(@RequestBody PersonDto dto) {
-
-        Person person = personService.create(dto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(person.getId())
-                .toUri();
-
-        return ResponseEntity.created(uri).body(person);
-    }
-
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PutMapping(value = "/{personId}/v1")
-    public ResponseEntity<PersonDto> update(@RequestBody PersonDto dto, @PathVariable Long personId) {
+    public ResponseEntity<PersonDTO> update(@RequestBody PersonDTO dto, @PathVariable Long personId) {
         return ResponseEntity.ok().body(personService.update(dto, personId));
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping(value = "/{personId}/v1")
-    public ResponseEntity<PersonDto> findById(@PathVariable Long personId) {
+    public ResponseEntity<PersonDTO> findById(@PathVariable Long personId) {
         return ResponseEntity.ok().body(personService.findById(personId));
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping(value = "/v1")
-    public ResponseEntity<List<PersonDto>> findAll() {
+    public ResponseEntity<List<PersonDTO>> findAll() {
         return ResponseEntity.ok().body(personService.findAll());
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    @DeleteMapping(value = "/{personId}/v1")
-    public ResponseEntity<Void> delete(@PathVariable Long personId) {
-        personService.delete(personId);
-        return ResponseEntity.noContent().build();
-    }
 }

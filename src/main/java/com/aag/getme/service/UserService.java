@@ -1,7 +1,8 @@
 package com.aag.getme.service;
 
-import com.aag.getme.dto.UserDto;
+import com.aag.getme.dto.UserDTO;
 import com.aag.getme.exceptions.DatabaseException;
+import com.aag.getme.exceptions.InvalidResourceAccessException;
 import com.aag.getme.exceptions.ModelNotFoundException;
 import com.aag.getme.model.Role;
 import com.aag.getme.model.User;
@@ -35,20 +36,23 @@ public class UserService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Transactional
-    public User create(UserDto dto) {
+    public User create(UserDTO dto) {
+        if(!dto.getPassword().equals(dto.getPasswordConfirm()))
+            throw new InvalidResourceAccessException("Senhas não são iguais!");
+
         User user = modelMapper.map(dto, User.class);
         user.setPassword(encoder.encode(dto.getPassword()));
         return userRepository.save(user);
     }
 
     @Transactional
-    public UserDto update(UserDto dto, Long userId) {
+    public UserDTO update(UserDTO dto, Long userId) {
         try {
             User user = userRepository.getReferenceById(userId);
             modelMapper.map(dto, user);
             modelMapper.map(dto, user);
             user.setPassword(encoder.encode(dto.getPassword()));
-            return modelMapper.map(userRepository.save(user), UserDto.class);
+            return modelMapper.map(userRepository.save(user), UserDTO.class);
         }catch (EntityNotFoundException e) {
             throw new ModelNotFoundException(USER_NOT_FOUND + userId);
         }
@@ -56,11 +60,11 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional(readOnly = true)
-    public UserDto findById(Long userId) {
+    public UserDTO findById(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new RuntimeException(USER_NOT_FOUND + userId));
 
-        return modelMapper.map(user, UserDto.class);
+        return modelMapper.map(user, UserDTO.class);
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)

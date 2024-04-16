@@ -1,14 +1,13 @@
 package com.aag.getme.controller;
 
 import com.aag.getme.dto.ReportPersonDTO;
-import com.aag.getme.model.Report;
 import com.aag.getme.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -18,27 +17,31 @@ public class ReportController {
     @Autowired
     private ReportService reportService;
 
-    @PostMapping(value = "/users/{id}")
-    public ResponseEntity<ReportPersonDTO> save(@PathVariable long id, @RequestBody ReportPersonDTO reportPersonDTO) {
-
-        ReportPersonDTO report = reportService.save(reportPersonDTO, id);
-               URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(report.getId())
-                .toUri();
-
-        return ResponseEntity.created(uri).body(report);
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @PostMapping(value = "/users")
+    public ResponseEntity<ReportPersonDTO> save(@RequestBody ReportPersonDTO reportPersonDTO) {
+        ReportPersonDTO report = reportService.save(reportPersonDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(report);
     }
 
-    @GetMapping(value = "/{id}/users/{userId}")
-    public ResponseEntity<ReportPersonDTO> findId(@PathVariable long id, @PathVariable long userId) {
-        return ResponseEntity.ok().body(reportService.findId(userId, id));
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @GetMapping(value = "/users")
+    public ResponseEntity<List<ReportPersonDTO>> findAllUser() {
+        return ResponseEntity.ok().body(reportService.findAllUser());
 
     }
 
-    @GetMapping(value = "/users/{userId}")
-    public ResponseEntity<List<ReportPersonDTO>> findAll(@PathVariable long userId) {
-        return ResponseEntity.ok().body(reportService.findAll(userId));
+    @GetMapping
+    public ResponseEntity<List<ReportPersonDTO>> findAll() {
+        return ResponseEntity.ok().body(reportService.findAll());
 
     }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<ReportPersonDTO> findId(@PathVariable long id) {
+        return ResponseEntity.ok().body(reportService.findId(id));
+
+    }
+
+
 }
