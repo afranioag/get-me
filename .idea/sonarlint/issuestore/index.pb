@@ -3,8 +3,6 @@
 	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
 C
 docker-compose.yaml,e/f/ef8def03dc8f162799089e9b5f4321201c8810d5
-7
-pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
 A
 system.properties,a/5/a5db35984da8ffa0e255c16a2e31ae7b26e7d222
 _
@@ -23,10 +21,6 @@ Asrc/main/java/com/aag/getme/repository/InformationRepository.java,1/c/1cdb409b
 -src/main/java/com/aag/getme/model/Person.java,f/0/f01042d42d85adfbd82c3df3fa4fec3039569743
 l
 <src/main/java/com/aag/getme/repository/ReportRepository.java,d/1/d1cc0aaec8445e4b2e05180bde7760aea9a5105c
-i
-9src/main/java/com/aag/getme/config/ModelMapperConfig.java,0/6/064456aca482fecd562bc899051d89c6f22dcef3
-d
-4src/main/java/com/aag/getme/dto/ReportPersonDTO.java,0/e/0e14f9aa0a2c10f9516d7ef18385728b6a0ed8ed
 m
 =src/main/java/com/aag/getme/exceptions/DatabaseException.java,f/5/f52aeb252d3f86e89cd68f6dc17f1f202634d95b
 r
@@ -35,3 +29,9 @@ i
 9src/main/java/com/aag/getme/exceptions/StandardError.java,7/f/7f63f49dacb83a014e3d7a2d0e945f144cd828d8
 ]
 -src/main/java/com/aag/getme/model/Report.java,d/f/df45717c08c7c5bb76eb7d0d9870209b361cea12
+f
+6src/main/java/com/aag/getme/service/ReportService.java,0/0/00185c4a71fa1b341f431b08c01a4afa8beddc0e
+y
+Isrc/main/java/com/aag/getme/config/customgrant/CustomUserAuthorities.java,1/c/1cd87ba32194a9a224e424cc68b49ad71c6c3c8d
+f
+6src/main/java/com/aag/getme/config/auth/AppConfig.java,4/5/452f15687a4d3feaa49f2a9be082e66397fdc7a8

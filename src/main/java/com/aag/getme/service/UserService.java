@@ -44,19 +44,28 @@ public class UserService implements UserDetailsService {
 
         User user = modelMapper.map(dto, User.class);
         user.setPassword(encoder.encode(dto.getPassword()));
+
+        Role role = new Role();
+        role.setId(2L);
+        user.addRole(role);
+
         return userRepository.save(user);
     }
 
     @Transactional
     public UserDTO update(UserDTO dto, Long userId) {
         try {
+            validatedUser(userId);
+
             User user = userRepository.getReferenceById(userId);
             modelMapper.map(dto, user);
             modelMapper.map(dto, user);
             user.setPassword(encoder.encode(dto.getPassword()));
             return modelMapper.map(userRepository.save(user), UserDTO.class);
-        }catch (EntityNotFoundException e) {
+
+        } catch (EntityNotFoundException e) {
             throw new ModelNotFoundException(USER_NOT_FOUND + userId);
+
         }
 
     }
@@ -71,15 +80,17 @@ public class UserService implements UserDetailsService {
 
     @Transactional(propagation = Propagation.SUPPORTS)
     public void delete(Long userId) {
-        if(userRepository.existsById(userId)) {
-           try {
-               userRepository.deleteById(userId);
-           } catch (DataIntegrityViolationException e) {
-               throw new DatabaseException("Falha de integrida referencial");
-           }
-        }
+        if(!userRepository.existsById(userId))
+            throw new ModelNotFoundException(USER_NOT_FOUND + userId);
 
-        throw new ModelNotFoundException(USER_NOT_FOUND + userId);
+        try {
+            validatedUser(userId);
+            userRepository.deleteById(userId);
+
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Falha de integridade referencial");
+
+        }
     }
 
     @Override
@@ -102,5 +113,11 @@ public class UserService implements UserDetailsService {
 
     public User getUserAuthenticated() {
         return userRepository.findByEmail(getUserNameAuthenticated());
+    }
+
+    private void validatedUser(Long userId) {
+        User user = getUserAuthenticated();
+        if(!userId.equals(user.getId()))
+            throw new InvalidResourceAccessException("Usuário logado diferente do userId informado!");
     }
 }
