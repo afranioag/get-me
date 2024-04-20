@@ -1,6 +1,7 @@
 package com.aag.getme.controller;
 
 import com.aag.getme.dto.ReportPersonDTO;
+import com.aag.getme.dto.ReportPersonInformationDTO;
 import com.aag.getme.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,8 +27,16 @@ public class ReportController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping(value = "/users")
-    public ResponseEntity<List<ReportPersonDTO>> findAllUser() {
-        return ResponseEntity.ok().body(reportService.findAllUser());
+    public ResponseEntity<List<ReportPersonInformationDTO>> findAllByUser() {
+        return ResponseEntity.ok().body(reportService.findAllByUser());
+
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @DeleteMapping(value = "/{reportId}/users")
+    public ResponseEntity<Void> delete(@PathVariable long reportId) {
+        reportService.delete(reportId);
+        return ResponseEntity.noContent().build();
 
     }
 
