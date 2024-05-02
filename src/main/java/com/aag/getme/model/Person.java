@@ -34,7 +34,8 @@ public class Person extends MyEntity implements Serializable {
     private String physicalDescription;
     private String psychologicalDescription;
     private String document;
-    private String photo;
+    @Column(name = "photo")
+    private String image;
     private StatusPerson status;
 
     @Getter

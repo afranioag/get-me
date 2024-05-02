@@ -24,4 +24,5 @@ public class PersonDTO implements Serializable {
     private LocationDetails lastSeenLocation;
     private String document;
     private StatusPerson status;
+    private String image;
 }
