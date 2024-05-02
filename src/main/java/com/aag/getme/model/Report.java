@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -35,5 +36,5 @@ public class Report extends MyEntity implements Serializable {
     private LocationDetails lastSeenLocation;
 
     @OneToMany(mappedBy = "report", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Information> informations;
+    private List<Information> informations = new ArrayList<>();
 }

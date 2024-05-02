@@ -9,3 +9,8 @@ spring:
 
 cors:
   origins: ${CORS_ORIGINS:http://localhost:3000,http://localhost:5173}
+
+aws:
+  s3:
+    access-key-id: ${S3_KEY_ID}
+    secret-access-key: ${S3_SECRET_KEY}
