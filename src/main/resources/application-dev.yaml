@@ -23,5 +23,5 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         jdbc.time_zone: UTC
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
 

@@ -7,6 +7,7 @@ import com.aag.getme.dto.ReportPersonInformationDTO;
 import com.aag.getme.model.*;
 import com.aag.getme.repository.ReportRepository;
 import com.aag.getme.repository.UserRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.List;
 @Service
 public class ReportService {
 
+    private static final String URL_FOTO_DEFAULT = "https://aag-s3.s3.sa-east-1.amazonaws.com/perfil1.png";
     @Autowired
     private ModelMapper modelMapper;
 
@@ -39,7 +41,12 @@ public class ReportService {
     public ReportPersonDTO save(ReportPersonDTO reportPersonDTO) {
         User user = userService.getUserAuthenticated();
 
-        String url = service.uploadFile(reportPersonDTO.getPerson().getImage());
+        String url = URL_FOTO_DEFAULT;
+
+        if(!StringUtils.isAllBlank(reportPersonDTO.getPerson().getImage())) {
+           url = service.uploadFile(reportPersonDTO.getPerson().getImage());
+
+        }
         reportPersonDTO.getPerson().setImage(url);
 
         Person person = personService.create(reportPersonDTO.getPerson());
