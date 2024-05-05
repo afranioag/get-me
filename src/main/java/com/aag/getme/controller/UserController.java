@@ -1,7 +1,7 @@
 package com.aag.getme.controller;
 
 import com.aag.getme.dto.UserDTO;
-import com.aag.getme.model.User;
+import com.aag.getme.dto.UserResponse;
 import com.aag.getme.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,9 +17,9 @@ public class UserController {
     private UserService userService;
 
     @PostMapping(value = "/v1")
-    public ResponseEntity<?> create(@RequestBody UserDTO dto) {
-        User user = userService.create(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(user.getId());
+    public ResponseEntity<UserResponse> create(@RequestBody UserDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(dto));
+
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")

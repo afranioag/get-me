@@ -1,6 +1,7 @@
 package com.aag.getme.service;
 
 import com.aag.getme.dto.UserDTO;
+import com.aag.getme.dto.UserResponse;
 import com.aag.getme.exceptions.DatabaseException;
 import com.aag.getme.exceptions.InvalidResourceAccessException;
 import com.aag.getme.exceptions.ModelNotFoundException;
@@ -38,7 +39,7 @@ public class UserService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Transactional
-    public User create(UserDTO dto) {
+    public UserResponse create(UserDTO dto) {
         if(!dto.getPassword().equals(dto.getPasswordConfirm()))
             throw new InvalidResourceAccessException("Senhas não são iguais!");
 
@@ -49,7 +50,9 @@ public class UserService implements UserDetailsService {
         role.setId(2L);
         user.addRole(role);
 
-        return userRepository.save(user);
+        userRepository.save(user);
+
+        return modelMapper.map(user, UserResponse.class);
     }
 
     @Transactional
