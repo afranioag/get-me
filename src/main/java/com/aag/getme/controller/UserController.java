@@ -30,8 +30,14 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping(value = "/{userId}/v1")
-    public ResponseEntity<UserDTO> findById(@PathVariable Long userId) {
+    public ResponseEntity<UserResponse> findById(@PathVariable Long userId) {
         return ResponseEntity.ok().body(userService.findById(userId));
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @GetMapping(value = "/email/v1")
+    public ResponseEntity<UserResponse> findByEmail(@RequestParam String email) {
+        return ResponseEntity.ok().body(userService.findByEmail(email));
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")

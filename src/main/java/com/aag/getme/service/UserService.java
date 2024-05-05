@@ -28,7 +28,7 @@ import static com.aag.getme.config.auth.AppConfig.getUserNameAuthenticated;
 @Service
 public class UserService implements UserDetailsService {
 
-    private static final String USER_NOT_FOUND = "User not found with id: ";
+    private static final String USER_NOT_FOUND = "User not found with: ";
     @Autowired
     private ModelMapper modelMapper;
 
@@ -74,13 +74,23 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional(readOnly = true)
-    public UserDTO findById(Long userId) {
+    public UserResponse findById(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new RuntimeException(USER_NOT_FOUND + userId));
 
-        return modelMapper.map(user, UserDTO.class);
+        return modelMapper.map(user, UserResponse.class);
     }
 
+    @Transactional(readOnly = true)
+    public UserResponse findByEmail(String email) {
+        try {
+            return modelMapper.map(userRepository.findByEmail(email), UserResponse.class);
+
+        }catch (Exception e) {
+            throw new RuntimeException(USER_NOT_FOUND + email);
+
+        }
+    }
     @Transactional(propagation = Propagation.SUPPORTS)
     public void delete(Long userId) {
         if(!userRepository.existsById(userId))
@@ -123,4 +133,5 @@ public class UserService implements UserDetailsService {
         if(!userId.equals(user.getId()))
             throw new InvalidResourceAccessException("Usuário logado diferente do userId informado!");
     }
+
 }
