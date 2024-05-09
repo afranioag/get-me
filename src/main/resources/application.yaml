@@ -8,7 +8,7 @@ spring:
       duration: ${JWT_DURATION:86400}
 
 cors:
-  origins: ${CORS_ORIGINS:http://localhost:3000,http://localhost:5173}
+  origins: ${CORS_ORIGINS}
 
 aws:
   s3:
