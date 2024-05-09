@@ -1,5 +1,7 @@
 package com.aag.getme.config.auth;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -30,6 +32,7 @@ import java.util.List;
 @EnableMethodSecurity
 public class ResourceServerConfig {
 
+	private static final Logger log = LoggerFactory.getLogger(ResourceServerConfig.class);
 	@Value("${cors.origins}")
 	private String corsOrigins;
 
@@ -68,10 +71,11 @@ public class ResourceServerConfig {
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 
-		String[] origins = corsOrigins.split(",");
+		log.info("CORS: corsOrigins");
 
+		String[] origins = corsOrigins.split(",");
 		CorsConfiguration corsConfig = new CorsConfiguration();
-		corsConfig.setAllowedOriginPatterns(List.of("*"));
+		corsConfig.setAllowedOriginPatterns(List.of(origins));
 		corsConfig.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "PATCH"));
 		corsConfig.setAllowCredentials(true);
 		corsConfig.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
