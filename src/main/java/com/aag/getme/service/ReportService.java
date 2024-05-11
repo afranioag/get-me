@@ -78,8 +78,7 @@ public class ReportService {
 
     @Transactional(readOnly = true)
     public List<ReportPersonInformationDTO> findAllByUser() {
-        long userId = 1;
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User não existe"));
+        User user = userService.getUserAuthenticated();
         List<Report> reports = reportRepository.findAllByUser(user);
         return reports.stream().map(this::getReportPersonInformationDTO).toList();
     }

@@ -2,13 +2,13 @@ spring:
   profiles:
     active: ${APP_PROFILE:dev}
   security:
-    client-id: ${CLIENT_ID:getme}
-    client-secret: ${CLIENT_SECRET:getme653}
+    client-id: ${CLIENT_ID:getme653}
+    client-secret: ${CLIENT_SECRET:getme@65329}
     jwt:
       duration: ${JWT_DURATION:86400}
 
 cors:
-  origins: ${CORS_ORIGINS}
+  origins: ${CORS_ORIGINS:http://localhost:3000}
 
 aws:
   s3:
